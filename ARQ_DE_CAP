@@ -1,0 +1,29 @@
+flowchart LR
+    
+    classDef parcial fill:#FFF2CC,stroke:#D6B656,stroke-width:1.5px,color:#000
+    classDef deficiente fill:#FCE4D6,stroke:#C55A11,stroke-width:1.5px,color:#000
+    classDef inexistente fill:#F8CECC,stroke:#B85450,stroke-width:1.5px,color:#000
+
+    subgraph CAT1 ["Capacidades Estratégicas"]
+        direction TB
+        C05["CAP-05 Optimización de flujo logístico<br><b>INEXISTENTE</b>"]:::inexistente
+        C09["CAP-09 Medir el Impacto Ambiental<br><b>INEXISTENTE</b>"]:::inexistente
+    end
+
+    subgraph CAT2 ["Capacidades Misionales"]
+        direction TB
+        C01["CAP-01 Gestión de recolección<br><b>DEFICIENTE</b>"]:::deficiente
+        C02["CAP-02 Gestión de inventario<br><b>DEFICIENTE</b>"]:::deficiente
+        C03["CAP-03 Evaluación técnica<br><b>PARCIAL</b>"]:::parcial
+        C04["CAP-04 Gestión de trazabilidad<br><b>DEFICIENTE</b>"]:::deficiente
+        C08["CAP-08 Gestión de reciclaje<br><b>DEFICIENTE</b>"]:::deficiente
+    end
+
+    subgraph CAT3 ["Capacidades de Apoyo"]
+        direction TB
+        C06["CAP-06 Gestión de actores y red<br><b>PARCIAL</b>"]:::parcial
+        C07["CAP-07 Gestión de evidencias<br><b>DEFICIENTE</b>"]:::deficiente
+    end
+
+
+    CAT1 ~~~ CAT2 ~~~ CAT3

@@ -1,0 +1,55 @@
+flowchart LR
+    classDef actor fill:#E1EEF7,stroke:#6C8EBF,stroke-width:1.5px,color:#000;
+    classDef info fill:#FFFFFF,stroke:#333333,stroke-width:1.5px,color:#000;
+    classDef isolated fill:#F8CECC,stroke:#B85450,stroke-width:1.5px,color:#000;
+
+    subgraph E1 ["1. Solicitud y Administración"]
+        ACT_GEN(["Generadores<br>(Ciudadanos / Empresas)"]):::actor
+        ACT_ADM(["Administrador<br>del Sistema"]):::actor
+        
+        INF01["<b>INF-01: Solicitud de Recolección</b><br>• Correo, WhatsApp, Web<br>• Petición inicial de lotes"]:::info
+        INF08["<b>INF-08: Directorio de Actores</b><br>• Excel personal / Contactos<br>• Lista de roles y permisos"]:::isolated
+    end
+
+    subgraph E2 ["2. Inventario y Custodia"]
+        ACT_OPC(["Operadores de Centro /<br>Guardias"]):::actor
+        
+        INF02["<b>INF-02: Registro de Inventario</b><br>• Excel local / Cuadernos<br>• Stock y ubicación temporal"]:::info
+        INF05["<b>INF-05: Acta Entrega-Recepción</b><br>• Papel con firma física<br>• Traspaso de custodia"]:::isolated
+    end
+
+    subgraph E3 ["3. Evaluación Técnica"]
+        ACT_TEC(["Técnicos Evaluadores"]):::actor
+        
+        INF03["<b>INF-03: Evaluación Técnica</b><br>• Impreso / Word / Excel<br>• Clasificación y diagnóstico"]:::info
+        INF06["<b>INF-06: Evidencia Digital</b><br>• Celulares / Drive<br>• Fotos y logs de borrado"]:::isolated
+    end
+
+    subgraph E4 ["4. Logística y Disposición"]
+        ACT_LOG(["Coordinador Logístico"]):::actor
+        ACT_GEST(["Gestores / Reacondicionadores"]):::actor
+        
+        INF04["<b>INF-04: Orden de Despacho</b><br>• Correo, WhatsApp, Llamadas<br>• Traslado de lotes"]:::info
+        INF07["<b>INF-07: Certificado Final</b><br>• PDF local / Correo<br>• Acreditación de tratamiento"]:::isolated
+    end
+
+    ACT_GEN --> INF01
+    ACT_ADM --> INF08
+    ACT_OPC --> INF02
+    ACT_OPC --> INF05
+    ACT_TEC --> INF03
+    ACT_TEC --> INF06
+    ACT_LOG --> INF04
+    ACT_GEST --> INF07
+
+    INF01 -- "Transcripción manual" --> INF02
+    INF08 -. "Sin acceso centralizado" .-x INF01
+    
+    INF02 <---> |"Actualización manual paralela"| INF03
+    INF05 -. "Sin vínculo digital (Riesgo extravío)" .-x INF02
+    
+    INF06 -. "Sin enlace a ID de lote" .-x INF03
+    INF03 -- "Coordinación informales" --> INF04
+    
+    INF04 -- "Despacho sin ruta formal" --> INF07
+    INF07 -. "Emisión tardía / Sin trazabilidad" .-x INF02

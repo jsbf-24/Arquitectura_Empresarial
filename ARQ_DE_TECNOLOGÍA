@@ -1,0 +1,42 @@
+flowchart LR
+    classDef hardware fill:#E1EEF7,stroke:#6C8EBF,stroke-width:1.5px,color:#000;
+    classDef network fill:#FFF2CC,stroke:#D6B656,stroke-width:1.5px,color:#000;
+    classDef cloud fill:#D5E8D4,stroke:#82B366,stroke-width:1.5px,color:#000;
+    classDef user fill:#E1D5E7,stroke:#9673A6,stroke-width:1.5px,color:#000;
+
+    subgraph LOCAL ["1. Centros de Acopio (Local)"]
+        OPC(["Operador de centro"]):::user
+        PC["Computador de Escritorio<br>(Excel local, Correo, Navegador)"]:::hardware
+    end
+
+    subgraph OFICINA ["2. Oficina Central"]
+        CORD(["Coordinador logístico"]):::user
+        LAPTOP["Portátil / Laptop<br>(Excel pesado, Carpetas compartidas)"]:::hardware
+    end
+
+    subgraph TERRENO ["3. En Terreno"]
+        TEC(["Técnicos / Conductores"]):::user
+        PHONE["Smartphones / Móviles<br>(WhatsApp, Fotos, Alertas)"]:::hardware
+    end
+
+    subgraph RED_INFRA ["4. Conectividad"]
+        RED["Red Wi-Fi / Datos Móviles<br>(Proveedor ISP)"]:::network
+    end
+
+    subgraph NUBE_INFRA ["5. Almacenamiento Cloud (SaaS)"]
+        SAAS["Servidor Nube<br>(Google Drive / OneDrive)"]:::cloud
+    end
+
+  
+    OPC --> PC
+    CORD --> LAPTOP
+    TEC --> PHONE
+
+    PC -- "sincronización manual / correo" --> RED
+    LAPTOP -- "acceso a carpetas compartidas" --> RED
+    PHONE -- "subida de evidencias / mensajes" --> RED
+
+    RED --> SAAS
+
+    PHONE -. "envío de fotos sin estructurar" .-> CORD
+    PC -. "envío de archivos adjuntos" .-> LAPTOP

@@ -1,0 +1,56 @@
+flowchart LR
+    classDef startNode fill:#90EE90,stroke:#2E8B57,stroke-width:2px;
+    classDef endNode fill:#FFB6C1,stroke:#CD5C5C,stroke-width:2px;
+    classDef decision fill:#FFF2CC,stroke:#D6B656,stroke-width:2px,color:#000;
+    classDef action fill:#FFFFFF,stroke:#555555,stroke-width:1.5px,color:#000;
+
+    subgraph GEN ["1. Generador"]
+        INICIO((" ")):::startNode
+        A1["1. Enviar solicitud por correo/nota"]:::action
+    end
+
+    subgraph OPC ["2. Operador de Centro"]
+        A2["2. Recibir lote en centro"]:::action
+        A3["3. Registrar entrada en Excel"]:::action
+        A9["9. Enviar equipo al destino"]:::action
+        A10["10. Recibir acta física y cerrar registro"]:::action
+        FIN(( )):::endNode
+    end
+
+    subgraph TEC ["3. Técnico Evaluador"]
+        A4["4. Inspeccionar equipo"]:::action
+        A5["5. Registrar diagnóstico"]:::action
+        D1{"¿Condición del<br>equipo?"}:::decision
+    end
+
+    subgraph CORD ["4. Coordinador Logístico"]
+        A6["6. Notificar y evaluar disponibilidad"]:::action
+        D2{"¿Existe capacidad<br>en destino?"}:::decision
+        A7["7. Validar destino final"]:::action
+        A8["8. Coordinar envío"]:::action
+        A_ESPERA["Almacenar temporalmente en bodega"]:::action
+    end
+
+    subgraph GEST ["5. Gestor / Beneficiario"]
+        A_REC["Recibir lote y firmar acta física"]:::action
+    end
+
+    INICIO --> A1
+    A1 --> A2
+    A2 --> A3
+    A3 --> A4
+    A4 --> A5
+    A5 --> D1
+
+    D1 -- "Reutilizable / Reciclable / Disposición" --> A6
+
+    A6 --> D2
+    D2 -- "No" --> A_ESPERA
+    A_ESPERA -. "Reintentar cuando haya cupo" .-> D2
+    D2 -- "Sí" --> A7
+
+    A7 --> A8
+    A8 --> A9
+    A9 --> A_REC
+    A_REC --> A10
+    A10 --> FIN

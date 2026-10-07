@@ -1,0 +1,34 @@
+graph LR
+    subgraph 1. Actores
+        Operador[Operador de centro]
+        Tecnico[Técnico evaluador]
+    end
+
+    subgraph 2. Procesos
+        PM02[PM-02: Recibir residuo]
+        PM03[PM-03: Clasificar destino]
+    end
+
+    subgraph 3. Capacidades
+        CAP02[CAP-02: Gestión de inventario]
+        CAP03[CAP-03: Evaluación técnica]
+    end
+
+    subgraph 4. Información
+        Excel[Hojas de cálculo de inventario]
+        Diagnostico[Diagnóstico técnico informal]
+    end
+
+    subgraph 5. Aplicaciones
+        AppExcel[Excel Local]
+        AppWhatsApp[WhatsApp]
+    end
+
+    subgraph 6. Tecnología
+        PCLocal[PC de escritorio]
+        MovilLocal[Teléfono móvil]
+    end
+
+    Operador --> PM02 --> CAP02 --> Excel --> AppExcel --> PCLocal
+    
+    Tecnico --> PM03 --> CAP03 --> Diagnostico --> AppWhatsApp --> MovilLocal

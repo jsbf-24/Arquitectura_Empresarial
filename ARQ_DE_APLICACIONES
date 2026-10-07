@@ -1,0 +1,31 @@
+flowchart LR
+    classDef actor fill:#E1EEF7,stroke:#6C8EBF,stroke-width:1.5px,color:#000;
+    classDef app fill:#FFFFFF,stroke:#555555,stroke-width:1.5px,color:#000;
+
+    OPC(["Operador de centro"]):::actor
+    CORD(["Coordinador logístico"]):::actor
+    GEST(["Operador / Gestor final"]):::actor
+    TI(["Proveedores ISP / Soporte TI"]):::actor
+
+    PC_OP["PC del operador de centro<br>(Registro diario / Excel local)"]:::app
+    PC_CORD["Portátil del coordinador logístico<br>(Consolidación de inventarios)"]:::app
+    MAIL["Correo electrónico<br>y notificaciones"]:::app
+    RED["Red de internet / Datos móviles<br>(Conectividad)"]:::app
+    IMP["Impresoras y formatos físicos<br>(Actas de entrega / recepción)"]:::app
+
+    OPC --> PC_OP
+    OPC --> IMP
+    OPC --> MAIL
+
+    CORD --> PC_CORD
+    CORD --> MAIL
+
+    GEST --> IMP
+
+    TI --> RED
+
+    PC_OP -- "notifica registros" --> MAIL
+    PC_OP -. "envío manual de archivos" .-> PC_CORD
+    PC_CORD -- "envía instrucciones" --> MAIL
+    MAIL -- "requiere conectividad" --> RED
+    IMP -. "digitalización / escaneo" .-> PC_OP

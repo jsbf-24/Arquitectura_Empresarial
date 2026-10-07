@@ -1,0 +1,38 @@
+flowchart LR
+    
+    classDef ext fill:#E1EEF7,stroke:#6C8EBF,stroke-width:1.5px,color:#000;
+    classDef int fill:#D5E8D4,stroke:#82B366,stroke-width:1.5px,color:#000;
+    classDef gov fill:#FFE6CC,stroke:#D79B00,stroke-width:1.5px,color:#000;
+
+    
+    subgraph EXT ["1. Actores Externos (Ecosistema Circular)"]
+        GEN(["<b>Generador</b><br>• Dispone y registra equipos<br>• [Prob: P-01]"]):::ext
+        REC(["<b>Reacondicionador / Reciclador</b><br>• Procesa y confirma tratamiento<br>• [Prob: P-02]"]):::ext
+        BEN(["<b>Entidad Beneficiaria</b><br>• Recibe donaciones recuperadas<br>• [Prob: P-04]"]):::ext
+    end
+
+    
+    subgraph INT ["2. Actores Internos (Operación y Logística)"]
+        OPC(["<b>Operador de Centro</b><br>• Recibe lotes y administra inventario<br>• [Prob: P-01, P-02, P-05]"]):::int
+        TEC(["<b>Técnico Evaluador</b><br>• Clasifica condición y destino<br>• [Prob: P-02, P-05]"]):::int
+        LOG(["<b>Coordinador Logístico</b><br>• Gestiona rutas, flujo y capacidad<br>• [Prob: P-03, P-05]"]):::int
+    end
+
+   
+    subgraph GOV ["3. Actores Internos (Gobierno y Plataforma)"]
+        ADM(["<b>Administrador</b><br>• Controla usuarios, roles y catálogos<br>• [Prob: P-01]"]):::gov
+        COM(["<b>Comité de Arquitectura</b><br>• Mide impacto, alineación y riesgos<br>• [Prob: P-04]"]):::gov
+    end
+
+    GEN -- "Solicitud de retiro / Entrega" --> OPC
+    OPC -- "Traspaso de lote para diagnóstico" --> TEC
+    TEC -- "Reporte de condición y destino" --> LOG
+    
+    LOG -- "Asignación de material a procesar" --> REC
+    REC -- "Entrega de equipos reacondicionados" --> BEN
+    
+    ADM -. "Soporte de plataforma y accesos" .-> OPC
+    ADM -. "Control de usuarios y roles" .-> LOG
+    
+    COM -. "Supervisión de métricas e impacto" .-> LOG
+    COM -. "Trazabilidad de donaciones" .-> BEN

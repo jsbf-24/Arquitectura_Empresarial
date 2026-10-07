@@ -1,0 +1,28 @@
+flowchart TD
+    classDef est fill:#FFF2CC,stroke:#D6B656,stroke-width:1.5px,color:#000
+    classDef mis fill:#D5E8D4,stroke:#82B366,stroke-width:1.5px,color:#000
+    classDef apo fill:#E1D5E7,stroke:#9673A6,stroke-width:1.5px,color:#000
+
+    subgraph Estrategicos ["1. Procesos Estratégicos"]
+        PE01["<b>PE-01: Planificar red de reciclaje</b><br>Definición de centros, gestores y capacidades logísticas"]:::est
+    end
+
+    subgraph Misionales ["2. Procesos Misionales (Cadena de Valor Principal AS-IS)"]
+        direction LR
+        PM01["<b>PM-01</b><br>Solicitar recolección"]:::mis
+        PM02["<b>PM-02</b><br>Recibir y evaluar residuo"]:::mis
+        PM03["<b>PM-03</b><br>Clasificar destino técnico"]:::mis
+        PM04["<b>PM-04</b><br>Ejecutar transferencia"]:::mis
+        PM05["<b>PM-05</b><br>Cerrar trazabilidad"]:::mis
+
+        PM01 --> PM02 --> PM03 --> PM04 --> PM05
+    end
+
+    subgraph Apoyo ["3. Procesos de Apoyo"]
+        PA01["<b>PA-01: Administrar usuarios</b><br>Gestión de accesos y roles"]:::apo
+        PA02["<b>PA-02: Controlar documentos</b><br>Custodia de actas y certificados"]:::apo
+    end
+
+   
+    Estrategicos -. "Gobierna y direcciona" .-> Misionales
+    Apoyo -. "Soporta operativamente" .-> Misionales
